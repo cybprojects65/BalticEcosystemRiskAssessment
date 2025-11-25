@@ -1,0 +1,422 @@
+> setwd("~/Risk Assessment Mar Baltico - NOVEMBRE/Risk assessment_novembre/Baltico_VAE/Multi K-means del VAE/Cod VAE+mkm")
+> source("~/Risk Assessment Mar Baltico - NOVEMBRE/Risk assessment_novembre/Baltico_VAE/Multi K-means del VAE/Cod VAE+mkm/MultiKmeans_del_VAE_cod_with_sd.R", echo = TRUE)
+
+> rm(list = ls())
+
+> library(mclust)
+
+> library(tidyverse)
+
+> options(warn = -1)
+
+> # File to select
+> #variables_risk1_standardized <- read.csv(file="./input/variables_risk1_standardized.csv", header=TRUE, sep=",")
+> variables_risk .... [TRUNCATED] 
+Rows: 954 Columns: 15                                                                                                                                                                                         
+── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (15): longitude, latitude, cod_cpue_2020_std, bathymetry_2020_std, bottom_temperature_2020_std, surface_net_primary_production_2020_std, fishing_activity_hours_2020_std, ship_density_route_2020_std,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+> variables_risk1_standardized <- variables_risk1_standardized %>%
++   drop_na()
+
+> # Remove rows with NA values
+> # variables_risk1_standardized <- variables_risk1_standardized %>%
+> #   drop_na()
+> 
+> # Selection of my study dataf .... [TRUNCATED] 
+
+> # Selection of my study area and features
+> selection <- variables_risk1_standardized #[which((variables_risk1_standardized$longitude>=bbxmin)&(vari .... [TRUNCATED] 
+
+> #select the first 300 lines to test the code=============Remember to comment
+> #selection <- selection %>% slice(1:100)
+> 
+> selected_features<-c("l ..." ... [TRUNCATED] 
+
+> cat(paste0("***Initialization***", "\n"))
+***Initialization***
+
+> # Parameters for k-means clustering
+> multi_centroidi<-  seq(from=3, to=60, by=1)  #numero di centrodi da 3 a 60 oppure inserisci c(4) per farne sol .... [TRUNCATED] 
+
+> N <- 2000   # numero di iterazioni
+
+> bics<-c()# 
+
+> for (n_centroidi in multi_centroidi){
++   
++   selected_features_coords <- selection[,selected_features]
++   # Study of centroids
++   cat(paste0("St ..." ... [TRUNCATED] 
+Study of centroids
+####I'm analyzing  3 centroids
+Saving the dataset
+Centroid distribution: 0.1373166 0.3354298 0.5272537 
+Unif: 0.01315235 
+Done
+Study of centroids
+####I'm analyzing  4 centroids
+Saving the dataset
+Centroid distribution: 0.1341719 0.2945493 0.5209644 0.05031447 
+Unif: 0.007770202 
+Done
+Study of centroids
+####I'm analyzing  5 centroids
+Saving the dataset
+Centroid distribution: 0.09643606 0.2704403 0.06498952 0.04821803 0.5199161 
+Unif: 0.006277493 
+Done
+Study of centroids
+####I'm analyzing  6 centroids
+Saving the dataset
+Centroid distribution: 0.09433962 0.2620545 0.06498952 0.04821803 0.3144654 0.2159329 
+Unif: 0.01588058 
+Done
+Study of centroids
+####I'm analyzing  7 centroids
+Saving the dataset
+Centroid distribution: 0.09538784 0.2379455 0.06498952 0.04821803 0.2714885 0.2641509 0.01781971 
+Unif: 0.01365978 
+Done
+Study of centroids
+####I'm analyzing  8 centroids
+Saving the dataset
+Centroid distribution: 0.09119497 0.2337526 0.0639413 0.04821803 0.2379455 0.1121593 0.01781971 0.1949686 
+Unif: 0.01926844 
+Done
+Study of centroids
+####I'm analyzing  9 centroids
+Saving the dataset
+Centroid distribution: 0.05974843 0.2180294 0.06289308 0.04821803 0.2243187 0.1373166 0.01781971 0.1708595 0.06079665 
+Unif: 0.0205518 
+Done
+Study of centroids
+####I'm analyzing  10 centroids
+Saving the dataset
+Centroid distribution: 0.08176101 0.172956 0.0639413 0.04507338 0.206499 0.08490566 0.01781971 0.1530398 0.07127883 0.1027254 
+Unif: 0.03130731 
+Done
+Study of centroids
+####I'm analyzing  11 centroids
+Saving the dataset
+Centroid distribution: 0.06079665 0.1498952 0.05031447 0.0408805 0.2075472 0.08490566 0.01781971 0.1509434 0.07127883 0.1048218 0.06079665 
+Unif: 0.03066616 
+Done
+Study of centroids
+####I'm analyzing  12 centroids
+Saving the dataset
+Centroid distribution: 0.06079665 0.1498952 0.05031447 0.0408805 0.2033543 0.07966457 0.01677149 0.06708595 0.05974843 0.1048218 0.06079665 0.10587 
+Unif: 0.03450938 
+Done
+Study of centroids
+####I'm analyzing  13 centroids
+Saving the dataset
+Centroid distribution: 0.04507338 0.1383648 0.05660377 0.03563941 0.1677149 0.07966457 0.01677149 0.06708595 0.05974843 0.1037736 0.06289308 0.10587 0.06079665 
+Unif: 0.04720745 
+Done
+Study of centroids
+####I'm analyzing  14 centroids
+Saving the dataset
+Centroid distribution: 0.04716981 0.03249476 0.04612159 0.02096436 0.1540881 0.08490566 0.01677149 0.07756813 0.06184486 0.1037736 0.06184486 0.09119497 0.06079665 0.1404612 
+Unif: 0.04580879 
+Done
+Study of centroids
+####I'm analyzing  15 centroids
+Saving the dataset
+Centroid distribution: 0.04716981 0.03249476 0.04821803 0.02096436 0.1184486 0.07966457 0.01677149 0.06603774 0.05870021 0.1037736 0.06184486 0.03668763 0.06079665 0.139413 0.1090147 
+Unif: 0.05319329 
+Done
+Study of centroids
+####I'm analyzing  16 centroids
+Saving the dataset
+Centroid distribution: 0.05031447 0.03459119 0.05660377 0.02096436 0.09433962 0.04507338 0.01677149 0.05136268 0.05450734 0.1027254 0.06184486 0.03668763 0.06079665 0.1027254 0.07127883 0.139413 
+Unif: 0.061796 
+Done
+Study of centroids
+####I'm analyzing  17 centroids
+Saving the dataset
+Centroid distribution: 0.03144654 0.03459119 0.03773585 0.01991614 0.09433962 0.07861635 0.01677149 0.0639413 0.05870021 0.1016771 0.02515723 0.05450734 0.06079665 0.08280922 0.06184486 0.1362683 0.0408805 
+Unif: 0.0600984 
+Done
+Study of centroids
+####I'm analyzing  18 centroids
+Saving the dataset
+Centroid distribution: 0.03144654 0.03459119 0.03773585 0.01991614 0.0932914 0.02620545 0.01677149 0.05974843 0.03773585 0.1016771 0.02515723 0.03983229 0.06079665 0.09538784 0.06184486 0.1362683 0.04192872 0.07966457 
+Unif: 0.05272367 
+Done
+Study of centroids
+####I'm analyzing  19 centroids
+Saving the dataset
+Centroid distribution: 0.03144654 0.03459119 0.03668763 0.01991614 0.09538784 0.02620545 0.01677149 0.05870021 0.03773585 0.1006289 0.0230608 0.05450734 0.06079665 0.07861635 0.06184486 0.1320755 0.03144654 0.07756813 0.02201258 
+Unif: 0.05406044 
+Done
+Study of centroids
+####I'm analyzing  20 centroids
+Saving the dataset
+Centroid distribution: 0.05031447 0.03144654 0.04192872 0.01991614 0.08805031 0.02620545 0.01677149 0.04716981 0.03144654 0.1016771 0.01886792 0.04192872 0.06079665 0.08909853 0.06184486 0.08385744 0.02830189 0.06289308 0.02201258 0.0754717 
+Unif: 0.07412455 
+Done
+Study of centroids
+####I'm analyzing  21 centroids
+Saving the dataset
+Centroid distribution: 0.03144654 0.03144654 0.03773585 0.01991614 0.06289308 0.02620545 0.01677149 0.06079665 0.03773585 0.1006289 0.01886792 0.02830189 0.06079665 0.07127883 0.05345912 0.07966457 0.02830189 0.07651992 0.02201258 0.06708595 0.06813417 
+Unif: 0.08495322 
+Done
+Study of centroids
+####I'm analyzing  22 centroids
+Saving the dataset
+Centroid distribution: 0.04926625 0.03144654 0.0293501 0.01991614 0.07337526 0.0230608 0.01677149 0.04507338 0.03249476 0.08280922 0.0408805 0.0293501 0.06079665 0.05974843 0.01362683 0.06603774 0.03773585 0.04192872 0.02515723 0.05345912 0.06708595 0.1006289 
+Unif: 0.09085632 
+Done
+Study of centroids
+####I'm analyzing  23 centroids
+Saving the dataset
+Centroid distribution: 0.03144654 0.03459119 0.03563941 0.01991614 0.08280922 0.0230608 0.01677149 0.04821803 0.03249476 0.07756813 0.0408805 0.03983229 0.04821803 0.05870021 0.01467505 0.06498952 0.03563941 0.04192872 0.02201258 0.03773585 0.07651992 0.1006289 0.01572327 
+Unif: 0.08281507 
+Done
+Study of centroids
+####I'm analyzing  24 centroids
+Saving the dataset
+Centroid distribution: 0.01257862 0.03144654 0.03144654 0.01991614 0.0639413 0.0230608 0.01677149 0.02725367 0.03563941 0.04612159 0.01991614 0.02620545 0.04821803 0.07127883 0.0524109 0.07337526 0.04507338 0.04297694 0.01886792 0.05870021 0.06498952 0.09643606 0.01572327 0.05765199 
+Unif: 0.08847674 
+Done
+Study of centroids
+####I'm analyzing  25 centroids
+Saving the dataset
+Centroid distribution: 0.01257862 0.03144654 0.03144654 0.01991614 0.07127883 0.04297694 0.01677149 0.02410901 0.05345912 0.04612159 0.03039832 0.02620545 0.03563941 0.05870021 0.01362683 0.0639413 0.04612159 0.01991614 0.01048218 0.04821803 0.07023061 0.1006289 0.0115304 0.05660377 0.05765199 
+Unif: 0.07944892 
+Done
+Study of centroids
+####I'm analyzing  26 centroids
+Saving the dataset
+Centroid distribution: 0.03773585 0.01991614 0.03354298 0.01991614 0.06603774 0.02620545 0.01677149 0.02410901 0.0524109 0.07756813 0.03039832 0.01781971 0.04821803 0.0639413 0.01362683 0.07023061 0.03459119 0.01781971 0.01048218 0.04612159 0.06289308 0.09643606 0.01572327 0.02201258 0.04402516 0.03144654 
+Unif: 0.07696191 
+Done
+Study of centroids
+####I'm analyzing  27 centroids
+Saving the dataset
+Centroid distribution: 0.03773585 0.01991614 0.03354298 0.01991614 0.06918239 0.02620545 0.01677149 0.01991614 0.0230608 0.07861635 0.02620545 0.01781971 0.04821803 0.06498952 0.01572327 0.06498952 0.03354298 0.01781971 0.01991614 0.04297694 0.04192872 0.1006289 0.01572327 0.02201258 0.03144654 0.03144654 0.05974843 
+Unif: 0.07667363 
+Done
+Study of centroids
+####I'm analyzing  28 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01904762  --- outliers:  1 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  29 centroids
+Saving the dataset
+Centroid distribution: 0.0230608 0.03249476 0.01991614 0.01991614 0.06289308 0.03249476 0.01677149 0.009433962 0.02201258 0.05974843 0.03878407 0.01572327 0.03563941 0.02201258 0.01362683 0.02515723 0.02096436 0.01991614 0.01991614 0.04192872 0.03983229 0.01467505 0.0115304 0.09014675 0.0293501 0.03563941 0.05974843 0.09643606 0.07023061 
+Unif: 0.06828248 
+Done
+Study of centroids
+####I'm analyzing  30 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01980198  --- outliers:  1 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  31 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.00990099  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  32 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01041667  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  33 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01052632  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  34 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01052632  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  35 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01052632  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  36 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01041667  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  37 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01052632  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  38 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01052632  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  39 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01666667  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  40 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01587302  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  41 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01587302  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  42 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01587302  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  43 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01587302  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  44 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01587302  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  45 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  3 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  46 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01123596  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  47 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  48 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  49 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  50 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01075269  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  51 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.0106383  --- outliers:  2 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  52 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.0106383  --- outliers:  3 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  53 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.0106383  --- outliers:  3 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  54 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  3 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  55 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  3 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  56 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  4 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  57 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01136364  --- outliers:  4 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  58 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.0125  --- outliers:  5 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  59 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01204819  --- outliers:  4 
+Unif: 0 
+Done
+Study of centroids
+####I'm analyzing  60 centroids
+Saving the dataset
+Unsuitable distribution: low uniformity: 0.01204819  --- outliers:  4 
+Unif: 0 
+Done
+
+> ########################################################################################################
+> # Save the best clustering based on BIC
+> .... [TRUNCATED] 
+
+> cat("Ks: ",multi_centroidi,"\n")
+Ks:  3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 
+
+> cat("ChiSQRs: ",bics,"\n")
+ChiSQRs:  0.01315235 0.007770202 0.006277493 0.01588058 0.01365978 0.01926844 0.0205518 0.03130731 0.03066616 0.03450938 0.04720745 0.04580879 0.05319329 0.061796 0.0600984 0.05272367 0.05406044 0.07412455 0.08495322 0.09085632 0.08281507 0.08847674 0.07944892 0.07696191 0.07667363 0 0.06828248 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+
+> cat("Best clustering: K=",best_clusterisation,"\n")
+Best clustering: K= 22 
+
+> best_clusterisation_file = paste0("./centroid_classification_assignment_",best_clusterisation,".csv")
+
+> cat("Best clustering file to take as result:",best_clusterisation_file,"\n")
+Best clustering file to take as result: ./centroid_classification_assignment_22.csv 
+
+> plot(multi_centroidi,bics,type='l')
