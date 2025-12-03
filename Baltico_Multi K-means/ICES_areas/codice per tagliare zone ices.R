@@ -65,3 +65,14 @@ baltic_mask6 <- shp %>%
 baltic_mask_dd <- st_transform(baltic_mask6, crs = 4326)
 # 3. Salva come nuovo shapefile (maschera)
 st_write(baltic_mask_dd, "baltic_mask_21_28.shp")
+
+
+
+
+
+
+baltic_mask7 <- shp %>%
+  filter(SubDivisio %in% c("22", "24"))
+baltic_mask_dd <- st_transform(baltic_mask7, crs = 4326)
+# 3. Salva come nuovo shapefile (maschera)
+st_write(baltic_mask_dd, "baltic_mask_22&24.shp")
