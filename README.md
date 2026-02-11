@@ -15,13 +15,28 @@ The repository includes datasets, R scripts, model outputs, hotspot maps, and qu
 
 The repository is organized by methodological approach and analysis type.
 
-├── Baltic Sea Multi k-means
-├── Baltic sea VAE
-├── Heatmap Baltic Sea
-├── Quantitative analysis
+BalticEcosystemRiskAssessment/
+│
+├── Baltic Sea Multi k-means/
+│   └── Multi K-means clustering workflows and outputs
+│
+├── Baltic sea VAE/
+│   └── VAE models, reconstruction outputs, and derived clustering results
+│
+├── Heatmap Baltic Sea/
+│   └── Generated hotspot and risk maps
+│
+├── Quantitative analysis/
+│   └── Statistical comparison and agreement metrics
+│
 ├── List_of_species.xlsx
+│   └── Complete list of the 145 analyzed species
+│
 ├── dataset_baltic_sea_2020_ices2126_original.csv
-├── Metadata_baltic_sea.xlsx
+│   └── Full processed dataset (0.1° × 0.1° resolution)
+│
+└── Metadata_baltic_sea.xlsx
+    └── Metadata and data source references
 
 
 ---
