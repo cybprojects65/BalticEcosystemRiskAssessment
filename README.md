@@ -52,6 +52,10 @@ Contains all scripts and outputs related to the Multi K-means clustering workflo
 
 Contains deep learning outputs and scripts used to derive reconstruction probabilities and anomaly/risk patterns from the stressor dataset.
 
+⚠️ The full VAE model implementation is not included in this repository due to size constraints.  
+It is available in a dedicated external repository here:  
+https://github.com/cybprojects65/VariationalAutoencoder
+
 The VAE directory also includes a dedicated subfolder containing the results of the Multi K-means clustering applied to the VAE-derived outputs, enabling a secondary clustering-based interpretation of reconstruction probability patterns and risk structures.
 
 ---
@@ -74,7 +78,7 @@ Each species-group subfolder includes:
 
 - Stressors dataset
 - R scripts used for:
-  - clustering or VAE processing
+  - clustering processing
 - Output CSV files with:
   - cluster assignments (Multi K-means)
   - reconstruction probabilities (VAE)
