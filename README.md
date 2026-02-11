@@ -7,14 +7,14 @@ The repository includes datasets, R scripts, model outputs, hotspot maps, and qu
 
 > 📌 **QGIS Project Availability**  
 > A QGIS project, supporting the cartographic visualisation of data, is available on the Zenodo repository at the following link:  
-> https://doi.org/10.5281/zenodo.18493559
-
+> https://doi.org/10.5281/zenodo.18493558
 ---
 
 ## 📂 Repository Structure
 
 The repository is organized by methodological approach and analysis type.
 
+```text
 BalticEcosystemRiskAssessment/
 │
 ├── Baltic Sea Multi k-means/
@@ -37,6 +37,7 @@ BalticEcosystemRiskAssessment/
 │
 └── Metadata_baltic_sea.xlsx
     └── Metadata and data source references
+
 
 
 ---
