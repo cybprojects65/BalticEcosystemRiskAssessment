@@ -106,7 +106,7 @@ This folder includes:
 
 ## 🐟 Species List
 
-**Species_list_145.xlsx**
+**list_of_species.txt**
 
 Contains the complete list of the 145 species included in the analysis.
 
