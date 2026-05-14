@@ -5,7 +5,7 @@ options(warn = -1)
 
 # File to select
 #variables_risk1_standardized <- read.csv(file="./input/variables_risk1_standardized.csv", header=TRUE, sep=",")
-variables_risk1_standardized <- read_csv("dataset_Baltic_2020_ices21_26_finale.csv")
+variables_risk1_standardized <- read_csv("dataset_baltic_sea_2020_std.csv")
 
 variables_risk1_standardized <- variables_risk1_standardized %>%
   drop_na()
@@ -32,30 +32,27 @@ selection <- variables_risk1_standardized #[which((variables_risk1_standardized$
 
 
 selected_features<-c("longitude", "latitude", 
-                 # "all_spp_cpue_2020_std", 
-                 #"five_spp_cpue_2020_std",   
-            "cod_cpue_2020_std",
-                 # "all_spp_old_2020_std",
-                 # "five_spp_old_2020_std",
-                 # "cod_old_2020_std",
-                 # "cod_spawning_area_2020",    #le aree di spawning sono rimaste probabilità ovvero 0 - 0.5 - 1. Non sono state standardizzate... ??
-            "bathymetry_2020_std", 
-            "bottom_temperature_2020_std", 
-            "surface_net_primary_production_2020_std",
-                 # "bottom_dissolved_oxygen_2020_std", 
-            "fishing_activity_hours_2020_std",      
-            "ship_density_route_2020_std",          
-            "bottom_salinity_2020_std" , 
-            "bottom_dissolved_oxygen_2020_inv_std",
-            "dumping_site_2020",
-            "military_area_2020",
-            "wind_farm_2020",
-            "bedrock_seabed_2020",
-            "hard_bottom_seabed_2020"      # ,
-                # "sand_seabed_2020",
-                # "hard_clay_seabed_2020",
-                # "mud_seabed_2020"
-     )
+                     # "all_spp_cpue_2020_std", 
+                      # "five_spp_cpue_2020_std",   
+                      "cod_cpue_2020_std",
+                     # "cod_spawning_area_2020",
+                     "bathymetry_2020_std", 
+                     "bottom_temperature_2020_std", 
+                     "surface_net_primary_production_2020_std",
+                     # "bottom_dissolved_oxygen_2020_std",
+                     "bottom_dissolved_oxygen_2020_inv_std",
+                     "fishing_activity_hours_2020_std",      
+                     "ship_density_route_2020_std",          
+                     "bottom_salinity_2020_std" , 
+                     "dumping_site_2020",
+                     "military_area_2020",
+                     "wind_farm_2020",
+                     "bedrock_seabed_2020",
+                     "hard_bottom_seabed_2020"      # ,
+                     # "sand_seabed_2020",
+                     # "hard_clay_seabed_2020",
+                     # "mud_seabed_2020"
+)
 
 
 

@@ -9,27 +9,24 @@
 #https://data.d4science.org/shub/E_RmlXSjJSbFVhZmVyT25YTFJJYlY1a3BJRWc0T0xueUVIOWNXamR3dStNV3RMZDl2WThJRE5rckY0b1cwWVU1Kw==
 ################################################################################
 
-anno <- "2020"      #il 2017 è il training, per passare agli anni dopo sostituisci qui 
+year <- "2020"      
 
 
-#input_file_path <-"Complete_dataset_mediterranean_sea_2021_2021_2021_2021_2021_2050RCP8.5.csv"
-#input_file_path <-paste0("centroid_classification_assignment_4_",anno,".CSV")
-input_file_path <-paste0("dataset_Baltic_2020_ices21_26_finale.csv")
-#variable_names<- "environment 2021_land_distance,environment 2021_mean_depth"
-#variable_names<- paste0("environment.",anno,"_land_distance,environment.",anno,"_mean_depth,environment.",anno,"_net_primary_production,environment.",anno,"_sea.bottom_dissolved_oxygen,fishing.activity.",anno,"_total_fishing,species.richness.",anno,",stocks.richness.",anno,",thermohalinity_",anno)
+input_file_path <-paste0("dataset_baltic_sea_2020_std.csv")
+
 variable_names <- "five_spp_cpue_2020_std,bathymetry_2020_std,bottom_temperature_2020_std,surface_net_primary_production_2020_std,fishing_activity_hours_2020_std,ship_density_route_2020_std,bottom_salinity_2020_std,bottom_dissolved_oxygen_2020_inv_std,dumping_site_2020,military_area_2020,wind_farm_2020,bedrock_seabed_2020,hard_bottom_seabed_2020"
 
 valutazione <- FALSE
 
-number_of_hidden_nodes <- 12    #le variabili sono 13 per cui per iniziare prova 13-1
+number_of_hidden_nodes <- 12    
 number_of_epochs <- 1000
-output_folder <- paste0("./out_",anno,"_n",number_of_hidden_nodes,"_test/")
+output_folder <- paste0("./out_",year,"_n",number_of_hidden_nodes,"_test/")
 
 model_folder <- paste0("./out_2020_n",number_of_hidden_nodes,"_test/")
 number_of_reconstruction_samples <- 16
 trained_model_file<-paste0(model_folder,"model_norm_1904X13_a46e53644752252350f55d39452053b60554958150c59855#13.bin")
-#prima di lanciare la fase di test/predizione ricordarsi di rinominare tutti i file nella cartella out come semplicemente "model"
-training_mode_active<-"false"    #true fa il training iniziale   #false fa il test, devi prima copiare il file.bin che si genera
+#before launching the test/prediction phase remember to rename all the files in the out folder as simply "model"
+training_mode_active<-"false"    #true does the initial training #false does the testing, you must first copy the file.bin file that is generated
 
 
 if(training_mode_active=="true"){
@@ -45,7 +42,7 @@ if(training_mode_active=="true"){
   
   
   execution_train_success<-(length(which(grepl(pattern="OK VAU Training",x=VAU_execution_train)))>0)
-  log_file <- paste0(output_folder,"log_file_training_",anno,".txt")
+  log_file <- paste0(output_folder,"log_file_training_",year,".txt")
   writeLines(VAU_execution_train, log_file)
 }else{
   dir.create(output_folder)
@@ -64,26 +61,26 @@ if(training_mode_active=="true"){
                              minimized = FALSE, invisible = TRUE)
   
   execution_train_success<-(length(which(grepl(pattern="OK VAU Test",x=VAU_execution_test)))>0)
-  log_file <- paste0(output_folder,"log_file_test_",anno,".txt")
+  log_file <- paste0(output_folder,"log_file_test_",year,".txt")
   writeLines(VAU_execution_test, log_file)
   
   ################################################################################
-  #####                           valutazione                                #####
+  #####                          valutazione                                 #####
   ################################################################################
   
   
   file_pattern <- "classification_test_"
   files <- list.files(path = output_folder, pattern = paste0("^", file_pattern))
   if (length(files) == 1) {
-    # Costruire il percorso completo del file
+    # Build the full file path
     file_path <- file.path(output_folder, files[1])
     
-    # Leggi il file CSV
+    # Read CSV file
     data_projected <- read.csv(file_path,header = TRUE)
-    # Visualizza i primi 6 dati
+    # View first 6 data
     head(data)
   } else {
-    cat("Più di un file trovato o nessun file trovato.")
+    cat("More than one file found or no files found.")
   }
   namelist<- unlist(strsplit(variable_names, split = ","))
   data_projected_rdx <- data_projected[,namelist]
@@ -104,12 +101,12 @@ if(training_mode_active=="true"){
   file_pattern <- "classification_test_"
   files <- list.files(path = output_folder, pattern = paste0("^", file_pattern))
   
-  data2 <- read.csv(paste0(output_folder,files), header=TRUE, sep=",")    # questo è il file che mi genera il vae come output
+  data2 <- read.csv(paste0(output_folder,files), header=TRUE, sep=",")    # this is the file that generates the vae as output
   
-  data3 <- read.csv(input_file_path, header=TRUE, sep=",")    #questo è l'originale input multi k means
+  data3 <- read.csv(input_file_path, header=TRUE, sep=",")    #this is the original multi k means input
   
   data4 <- cbind(data3$longitude, data3$latitude, data2$reconstruction_log_probability)
   colnames(data4) <- c("longitude", "latitude", "reconstruction_log_probability")
   
-  write.csv(data4, paste0(output_folder, "output_VAE_", anno, ".csv"), row.names = FALSE)
+  write.csv(data4, paste0(output_folder, "output_VAE_", year, ".csv"), row.names = FALSE)
 }

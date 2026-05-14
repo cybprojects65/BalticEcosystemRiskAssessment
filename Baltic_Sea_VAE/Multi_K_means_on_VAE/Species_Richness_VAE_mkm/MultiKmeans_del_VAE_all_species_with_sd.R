@@ -35,18 +35,15 @@ selected_features<-c("longitude", "latitude",
                      "all_spp_cpue_2020_std", 
                      # "five_spp_cpue_2020_std",   
                      # "cod_cpue_2020_std",
-                     # "all_spp_old_2020_std",
-                     # "five_spp_old_2020_std",
-                     # "cod_old_2020_std",
                      # "cod_spawning_area_2020",
                      "bathymetry_2020_std", 
                      "bottom_temperature_2020_std", 
                      "surface_net_primary_production_2020_std",
-                     # "bottom_dissolved_oxygen_2020_std", 
+                     # "bottom_dissolved_oxygen_2020_std",
+                     "bottom_dissolved_oxygen_2020_inv_std",
                      "fishing_activity_hours_2020_std",      
                      "ship_density_route_2020_std",          
                      "bottom_salinity_2020_std" , 
-                     "bottom_dissolved_oxygen_2020_inv_std",
                      "dumping_site_2020",
                      "military_area_2020",
                      "wind_farm_2020",
@@ -60,8 +57,8 @@ selected_features<-c("longitude", "latitude",
 cat(paste0("***Initialization***", "\n"))
 
 # Parameters for k-means clustering
-multi_centroidi<-  seq(from=3, to=60, by=1)  #numero di centrodi da 3 a 60 oppure inserisci c(4) per farne solo con un numero
-N <- 2000   # numero di iterazioni
+multi_centroidi<-  seq(from=3, to=60, by=1)  #number of centroids from 3 to 60 or enter c(4) to make it with just one number
+N <- 2000   # number of iterations
 
 bics<-c()# 
 for (n_centroidi in multi_centroidi){
@@ -92,23 +89,23 @@ for (n_centroidi in multi_centroidi){
   
   #ks.test(centroid_distribution, "punif")
   
-############# PROVA PER AGGIUNGERE LA DEVIAZIONE STANDARD AI CENTROIDI ############# 
-                   ############# PARTE 1 DI 2 #############
+############# ADD STANDARD DEVIATION TO CENTROIDS ############# 
+       ############# PART 1/2 #############
   
   feature_names <- selected_features[3:length(selected_features)]
   
-  # Calcolo delle deviazioni standard per ogni cluster
+  # Calculating standard deviations for each cluster
   centroidi_sd <- matrix(nrow=n_centroidi, ncol=(ncol(v)-1))
   
   for (centroide in 1:n_centroidi) {
-    # Seleziona tutti i punti appartenenti a questo cluster
+    # Select all points belonging to this cluster
     punti_cluster <- v[v$distance_class == centroide, 1:(ncol(v)-1)]
     
-    # Calcola la deviazione standard per ogni feature
+    # Calculate the standard deviation for each feature
     if (nrow(punti_cluster) > 1) {
       centroidi_sd[centroide,] <- apply(punti_cluster, 2, sd)
     } else {
-      # Se c'è un solo punto, sd = 0
+      # If there is only one point, sd = 0
       centroidi_sd[centroide,] <- 0
     }
   }
@@ -173,34 +170,34 @@ for (n_centroidi in multi_centroidi){
   centroidi_df <- as.data.frame(centroidi)
   centroidi_labelled_df <- as.data.frame(centroidi_labelled)
   
-  # Nomina corretta delle colonne
-  # feature_names <- selected_features[3:length(selected_features)]    # da eliminare perchè definito prima
+  # Correct naming of columns
+  # feature_names <- selected_features[3:length(selected_features)]    # to be eliminated because it was defined first
   names(centroidi_df) <- feature_names
   names(centroidi_labelled_df) <- paste0(feature_names, "_label")
   
-  # ID centroidi
+  # ID centroids
   centroid_id <- data.frame(centroid_id = 1:nrow(centroidi_df))
   
   
-############# PROVA PER AGGIUNGERE LA DEVIAZIONE STANDARD AI CENTROIDI #############   
-#################### PARTE 2 DI 2 #################### 
+  ############# ADD STANDARD DEVIATION TO CENTROIDS ############# 
+  ############# PART 2/2 #############
   
-  # Costruiamo centroidi_annotated interponendo le colonne
-  centroidi_annotated <- centroid_id  # iniziamo con ID
+  # construct annotated_centroids by interposing columns
+  centroidi_annotated <- centroid_id  # let's start with ID
   
   for (i in seq_along(feature_names)) {
     num_col <- centroidi_df[[i]]
-    sd_col <- centroidi_sd_df[[i]]  # NUOVA COLONNA
+    sd_col <- centroidi_sd_df[[i]]  # NEW COLUMN
     label_col <- centroidi_labelled_df[[i]]
     
     
     centroidi_annotated[[feature_names[i]]] <- num_col
-    centroidi_annotated[[paste0(feature_names[i], "_sd")]] <- sd_col  # AGGIUNGI SD
+    centroidi_annotated[[paste0(feature_names[i], "_sd")]] <- sd_col  # ADD SD
     centroidi_annotated[[paste0(feature_names[i], "_label")]] <- label_col
     
   }
   
-  # Aggiungi l'interpretazione
+  # Add interpretation
   centroidi_annotated$attention_level <- centroide_interpretazione
 
 ########################################################################  

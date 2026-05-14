@@ -35,18 +35,15 @@ selected_features<-c("longitude", "latitude",
                      # "all_spp_cpue_2020_std", 
                      "five_spp_cpue_2020_std",   
                      # "cod_cpue_2020_std",
-                     # "all_spp_old_2020_std",
-                     # "five_spp_old_2020_std",
-                     # "cod_old_2020_std",
                      # "cod_spawning_area_2020",
                      "bathymetry_2020_std", 
                      "bottom_temperature_2020_std", 
                      "surface_net_primary_production_2020_std",
-                     # "bottom_dissolved_oxygen_2020_std", 
+                     # "bottom_dissolved_oxygen_2020_std",
+                     "bottom_dissolved_oxygen_2020_inv_std",
                      "fishing_activity_hours_2020_std",      
                      "ship_density_route_2020_std",          
                      "bottom_salinity_2020_std" , 
-                     "bottom_dissolved_oxygen_2020_inv_std",
                      "dumping_site_2020",
                      "military_area_2020",
                      "wind_farm_2020",
@@ -56,6 +53,9 @@ selected_features<-c("longitude", "latitude",
                      # "hard_clay_seabed_2020",
                      # "mud_seabed_2020"
 )
+
+
+
 
 cat(paste0("***Initialization***", "\n"))
 
